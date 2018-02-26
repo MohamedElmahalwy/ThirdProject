@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.elmahalwy.thirdproject.Models.MainModel;
 import com.elmahalwy.thirdproject.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (position == 0) {
-
-        }
+       holder.tv_main.setText(main_list.get(position).getTv_main());
+        Picasso.with(context)
+                .load(main_list.get(position).getImage())
+                .into(holder.iv_main_pic);
     }
 
     @Override
