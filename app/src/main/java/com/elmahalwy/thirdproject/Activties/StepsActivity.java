@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elmahalwy.thirdproject.R;
 import com.google.android.exoplayer2.C;
@@ -33,6 +34,9 @@ public class StepsActivity extends AppCompatActivity {
     @BindView(R.id.video_steps)
     SimpleExoPlayerView video_steps;
     SimpleExoPlayer Player;
+    @BindView(R.id.tv_toolbar_add_widget)
+    TextView tv_toolbar_add_widget;
+    static String descrption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class StepsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_steps);
         ButterKnife.bind(this);
         InitEventDriven();
+        descrption=getIntent().getStringExtra("description");
     }
 
     void InitEventDriven() {
@@ -54,6 +59,13 @@ public class StepsActivity extends AppCompatActivity {
             video_steps.setVisibility(View.VISIBLE);
             PlayVideo(Uri.parse(getIntent().getStringExtra("video_url")));
         }
+        tv_toolbar_add_widget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleWidgetProvider simpleWidgetProvider=new SimpleWidgetProvider();
+                Toast.makeText(StepsActivity.this, "widget's added", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     void PlayVideo(Uri uri) {
