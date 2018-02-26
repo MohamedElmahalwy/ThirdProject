@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -22,21 +23,28 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView rv_main;
     MainAdapter mainAdapter;
     LinearLayoutManager linearLayoutManager;
     ArrayList<MainModel> main_list;
+    @BindView(R.id.tv_toolbar_title)
+    TextView tv_toolbar_titiel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         InitUi();
 
     }
 
     void InitUi() {
+        tv_toolbar_titiel.setText("Recipes");
         main_list = new ArrayList<>();
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayout.VERTICAL, false);

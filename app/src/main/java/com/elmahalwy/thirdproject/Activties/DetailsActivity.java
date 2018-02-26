@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -40,6 +41,8 @@ public class DetailsActivity extends AppCompatActivity {
     DetailsAdapter detailsAdapter;
     LinearLayoutManager linearLayoutManager;
     CustomLoadingDialog customLoadingDialog;
+    @BindView(R.id.tv_toolbar_title)
+    TextView tv_toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     void InitUi() {
+        tv_toolbar_title.setText(getIntent().getStringExtra("title"));
         steps_list = new ArrayList<>();
         items_recycler = (RecyclerView) findViewById(R.id.items_recycler);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
@@ -66,6 +70,7 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), IngredientActivity.class);
                 intent.putExtra("type", getIntent().getStringExtra("type"));
+                intent.putExtra("title", tv_toolbar_title.getText().toString());
                 startActivity(intent);
             }
         });
@@ -77,57 +82,57 @@ public class DetailsActivity extends AppCompatActivity {
         AndroidNetworking.get(stps_url)
                 .setPriority(Priority.MEDIUM)
                 .build()
-    .getAsJSONArray(new JSONArrayRequestListener() {
-        @Override
-        public void onResponse(JSONArray response) {
-            try {
-                customLoadingDialog.dismiss();
-                Log.e("response",response.toString());
-                JSONObject jsonObject=response.getJSONObject(Integer.parseInt(getIntent().getStringExtra("type")));
-                JSONArray steps_array=jsonObject.getJSONArray("steps");
-                for (int i=0;i<steps_array.length();i++){
-                    JSONObject current_object=steps_array.getJSONObject(i);
-                    StepsModel stepsModel=new StepsModel();
-                    stepsModel.setId(current_object.getString("id"));
-                    stepsModel.setShortDescription(current_object.getString("shortDescription"));
-                    stepsModel.setDescription(current_object.getString("description"));
-                    stepsModel.setVideoURL(current_object.getString("videoURL"));
-                    steps_list.add(stepsModel);
-                    Log.e("stepsModel",steps_list.toString());
-                }
-                items_recycler.setAdapter(detailsAdapter);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            customLoadingDialog.dismiss();
+                            Log.e("response", response.toString());
+                            JSONObject jsonObject = response.getJSONObject(Integer.parseInt(getIntent().getStringExtra("type")));
+                            JSONArray steps_array = jsonObject.getJSONArray("steps");
+                            for (int i = 0; i < steps_array.length(); i++) {
+                                JSONObject current_object = steps_array.getJSONObject(i);
+                                StepsModel stepsModel = new StepsModel();
+                                stepsModel.setId(current_object.getString("id"));
+                                stepsModel.setShortDescription(current_object.getString("shortDescription"));
+                                stepsModel.setDescription(current_object.getString("description"));
+                                stepsModel.setVideoURL(current_object.getString("videoURL"));
+                                steps_list.add(stepsModel);
+                                Log.e("stepsModel", steps_list.toString());
+                            }
+                            items_recycler.setAdapter(detailsAdapter);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-        }
+                    }
 
-        @Override
-        public void onError(ANError anError) {
-            customLoadingDialog.dismiss();
-            if (anError.getErrorCode() != 0) {
-                // received error from server
-                // error.getErrorCode() - the error code from server
-                // error.getErrorBody() - the error body from server
-                // error.getErrorDetail() - just an error detail
-                Log.e("onError errorCode : ", String.valueOf(anError.getErrorCode()));
-                Log.e("onError errorBody : ", anError.getErrorBody());
-                if (anError.getErrorCode() == 400) {
-                    Toast.makeText(DetailsActivity.this, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
-                }
-                if (anError.getErrorCode() == 500) {
-                    Toast.makeText(DetailsActivity.this, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
-                }
-                // get parsed error object (If ApiError is your class)
+                    @Override
+                    public void onError(ANError anError) {
+                        customLoadingDialog.dismiss();
+                        if (anError.getErrorCode() != 0) {
+                            // received error from server
+                            // error.getErrorCode() - the error code from server
+                            // error.getErrorBody() - the error body from server
+                            // error.getErrorDetail() - just an error detail
+                            Log.e("onError errorCode : ", String.valueOf(anError.getErrorCode()));
+                            Log.e("onError errorBody : ", anError.getErrorBody());
+                            if (anError.getErrorCode() == 400) {
+                                Toast.makeText(DetailsActivity.this, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
+                            }
+                            if (anError.getErrorCode() == 500) {
+                                Toast.makeText(DetailsActivity.this, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
+                            }
+                            // get parsed error object (If ApiError is your class)
 
-            } else {
-                // error.getErrorDetail() : connectionError, parseError, requestCancelledError
-                Log.e("onError errorDetail : ", anError.getErrorDetail());
-                if (anError.getErrorDetail().equals("connectionError")) {
-                    Toast.makeText(DetailsActivity.this, "خطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    });
+                        } else {
+                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+                            Log.e("onError errorDetail : ", anError.getErrorDetail());
+                            if (anError.getErrorDetail().equals("connectionError")) {
+                                Toast.makeText(DetailsActivity.this, "خطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
     }
 }

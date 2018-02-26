@@ -51,6 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("title", main_list.get(position).getTv_main());
                 if (position == 0) {
                     intent.putExtra("type", "0");
                 }
