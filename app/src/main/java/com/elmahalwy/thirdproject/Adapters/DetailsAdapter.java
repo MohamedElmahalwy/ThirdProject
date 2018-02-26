@@ -1,12 +1,14 @@
 package com.elmahalwy.thirdproject.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.elmahalwy.thirdproject.Activties.StepsActivity;
 import com.elmahalwy.thirdproject.Models.MainModel;
 import com.elmahalwy.thirdproject.Models.StepsModel;
 import com.elmahalwy.thirdproject.R;
@@ -39,12 +41,17 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(DetailsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(DetailsAdapter.ViewHolder holder, final int position) {
         holder.tv_step_name.setText(steps_list.get(position).getShortDescription());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent=new Intent(context, StepsActivity.class);
+                intent.putExtra("shortDescription",steps_list.get(position).getShortDescription());
+                intent.putExtra("description",steps_list.get(position).getDescription());
+                intent.putExtra("id",steps_list.get(position).getId());
+                intent.putExtra("video_url",steps_list.get(position).getVideoURL());
+                context.startActivity(intent);
 
             }
         });

@@ -43,29 +43,49 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-       holder.tv_main.setText(main_list.get(position).getTv_main());
+        holder.tv_main.setText(main_list.get(position).getTv_main());
         Picasso.with(context)
                 .load(main_list.get(position).getImage())
                 .into(holder.iv_main_pic);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.iv_main_pic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context,DetailsActivity.class);
-                if (position==0){
-                    intent.putExtra("type","0");
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailsActivity.class);
+                if (position == 0) {
+                    intent.putExtra("type", "0");
                 }
-                if (position==1){
-                    intent.putExtra("type","1");
+                if (position == 1) {
+                    intent.putExtra("type", "1");
                 }
-                if (position==2){
-                    intent.putExtra("type","2");
+                if (position == 2) {
+                    intent.putExtra("type", "2");
                 }
-                if (position==3){
-                    intent.putExtra("type","3");
+                if (position == 3) {
+                    intent.putExtra("type", "3");
                 }
                 context.startActivity(intent);
+
             }
         });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, DetailsActivity.class);
+////                if (position==0){
+////                    intent.putExtra("type","0");
+////                }
+////                if (position==1){
+////                    intent.putExtra("type","1");
+////                }
+////                if (position==2){
+////                    intent.putExtra("type","2");
+////                }
+////                if (position==3){
+////                    intent.putExtra("type","3");
+////                }
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -78,9 +98,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         TextView tv_main;
         @BindView(R.id.iv_main_pic)
         ImageView iv_main_pic;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
