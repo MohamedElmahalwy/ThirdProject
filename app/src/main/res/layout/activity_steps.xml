@@ -20,15 +20,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:textColor="#ED5734"
                 android:textSize="16sp"
+                android:text=""
                 android:visibility="gone" />
 
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                 android:id="@+id/video_steps"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="5dp" />
+                android:layout_margin="5dp"
+                />
 
             <TextView
                     android:id="@+id/tv_step_description"
@@ -37,6 +40,7 @@
                 android:layout_below="@+id/video_steps"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
+                android:text=""
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="30dp"
                 android:textColor="#ED5734"
