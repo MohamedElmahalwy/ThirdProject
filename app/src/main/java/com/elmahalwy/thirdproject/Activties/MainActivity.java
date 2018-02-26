@@ -69,53 +69,53 @@ public class MainActivity extends AppCompatActivity {
 
     void get_data() {
         String url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-        AndroidNetworking.get(url)
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject current_object = response.getJSONObject(i);
-                                MainModel mainModel = new MainModel();
-                                mainModel.setTv_main(current_object.getString("name"));
-                                mainModel.setIngredientsModels(current_object.getJSONArray("ingredients"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        if (error.getErrorCode() != 0) {
-                            // received error from server
-                            // error.getErrorCode() - the error code from server
-                            // error.getErrorBody() - the error body from server
-                            // error.getErrorDetail() - just an error detail
-                            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
-                            Log.e("onError errorBody : ", error.getErrorBody());
-                            if (error.getErrorCode() == 400) {
-                                Toast.makeText(MainActivity.this, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
-                            }
-
-                            if (error.getErrorCode() == 500) {
-                                Toast.makeText(MainActivity.this, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
-                            }
-
-                            // get parsed error object (If ApiError is your class)
-
-                        } else {
-                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
-                            Log.e("onError errorDetail : ", error.getErrorDetail());
-                            if (error.getErrorDetail().equals("connectionError")) {
-                                Toast.makeText(MainActivity.this, "خطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
+//        AndroidNetworking.get(url)
+//                .setPriority(Priority.MEDIUM)
+//                .build()
+//                .getAsJSONArray(new JSONArrayRequestListener() {
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        for (int i = 0; i < response.length(); i++) {
+//                            try {
+//                                JSONObject current_object = response.getJSONObject(i);
+//                                MainModel mainModel = new MainModel();
+//                                mainModel.setTv_main(current_object.getString("name"));
+//                                mainModel.setIngredientsModels(current_object.getJSONArray("ingredients"));
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError error) {
+//                        if (error.getErrorCode() != 0) {
+//                            // received error from server
+//                            // error.getErrorCode() - the error code from server
+//                            // error.getErrorBody() - the error body from server
+//                            // error.getErrorDetail() - just an error detail
+//                            Log.e("onError errorCode : ", String.valueOf(error.getErrorCode()));
+//                            Log.e("onError errorBody : ", error.getErrorBody());
+//                            if (error.getErrorCode() == 400) {
+//                                Toast.makeText(MainActivity.this, "حدث خطأ ما...", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            if (error.getErrorCode() == 500) {
+//                                Toast.makeText(MainActivity.this, "خطأ فى الاتصال بالسيرفر...", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            // get parsed error object (If ApiError is your class)
+//
+//                        } else {
+//                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+//                            Log.e("onError errorDetail : ", error.getErrorDetail());
+//                            if (error.getErrorDetail().equals("connectionError")) {
+//                                Toast.makeText(MainActivity.this, "خطأ فى الاتصال بالانترنت...", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                });
     }
 
 }
