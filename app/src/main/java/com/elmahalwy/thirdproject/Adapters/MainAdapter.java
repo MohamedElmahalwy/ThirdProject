@@ -1,6 +1,7 @@
 package com.elmahalwy.thirdproject.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.elmahalwy.thirdproject.Activties.DetailsActivity;
 import com.elmahalwy.thirdproject.Models.MainModel;
 import com.elmahalwy.thirdproject.R;
 import com.squareup.picasso.Picasso;
@@ -40,11 +42,30 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
        holder.tv_main.setText(main_list.get(position).getTv_main());
         Picasso.with(context)
                 .load(main_list.get(position).getImage())
                 .into(holder.iv_main_pic);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,DetailsActivity.class);
+                if (position==0){
+                    intent.putExtra("type","0");
+                }
+                if (position==1){
+                    intent.putExtra("type","1");
+                }
+                if (position==2){
+                    intent.putExtra("type","2");
+                }
+                if (position==3){
+                    intent.putExtra("type","3");
+                }
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
